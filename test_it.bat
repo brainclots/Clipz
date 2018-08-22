@@ -28,7 +28,7 @@ type %wordfile%
 type "%CLIPZ%\snarkshark_short.txt"
 
 :showname
-echo                                                           (%filename%)
+echo                                                                               ( %filename% )
 title Playing %filename%
 swavplayer "%DIR%\%filename%" > nul
 ::mode con: cols=100 lines=25
