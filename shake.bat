@@ -2,7 +2,7 @@
 
 :playit
 python "%GDRIVE%\Music\Soundz\Clipz\eightball.py"
-title Shaking the Eightball
+title ~~~ Shaking the Eightball ~~~
 :: Set random wait time of 15 to 120 seconds
 set /a timeleft=(%random% %% 105) + 15
 

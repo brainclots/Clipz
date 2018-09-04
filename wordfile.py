@@ -53,7 +53,7 @@ def main():
         linedict[linenum] = pline
 
 # Print out the formatted lines
-    outfile = open("{}.txt".format(soundfile), "w")
+    outfile = open(f"{soundfile}.txt", "w")
     for eachline in sorted(linedict.keys()):
         line = ' '.join(linedict[eachline])
         line = line.strip('\\')
