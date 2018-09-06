@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Get current window size
+window_current=$(stty -a < $(tty) | grep rows | awk '{ print $4 }' )
+
+[[ ! -f "$1" ]] && echo "$1" not found! && exit
+if [ -f "$1.txt" ] ; then
+  wordfile="$1.txt"
+else
+  wordfile="snarky.txt"
+fi
+num_lines=$(wc -l $wordfile | awk '{ print $1 }')
+let "window_height = 42 + $num_lines"
+printf "\033[8;$window_height;70t"
+clear
+echo ""
+echo " __________________"
+echo "/                  \ "
+cat $wordfile
+cat snarkshark.txt
+ttytle "Playing $1"
+afplay -v .2 "$1"
+printf "\033[8;$window_current;70t"
+ttytle
+clear
