@@ -8,7 +8,7 @@ type logoff.txt
 
 :opt
 echo.
-choice /c 12rq /m "Press 1 to hear logon sound, 2 to hear logoff sound, r to reset sounds, q  to quit."
+choice /c 12rq /m "Press 1 to hear logon sound, 2 to hear logoff sound, r to reset sounds, q  to quit. "
 
 if ERRORLEVEL 4 goto :audi9000
 if ERRORLEVEL 3 call .\LogOff\SetNextLogonLogoffSound.bat

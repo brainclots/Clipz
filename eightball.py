@@ -1,8 +1,8 @@
 #!/usr/local/bin/python3
-
 import glob
 import random
 import os
+import datetime
 
 google_drive = os.getenv('GDRIVE')
 google_drive = google_drive.replace('"', '')
@@ -11,8 +11,8 @@ wav_filenames = glob.glob(target_dir + '/*.wav')
 mp3_filenames = glob.glob(target_dir + '/*.mp3')
 
 all_filenames = wav_filenames + mp3_filenames
-random_number = random.randint(0, len(all_filenames)-1)
-lucky_one = all_filenames[random_number]
+all_filenames.sort()
+lucky_one = random.choice(all_filenames)
 word_file = lucky_one + ".txt"
 
 if os.path.isfile(word_file):
@@ -31,8 +31,10 @@ window_height = 29 + num_lines
 #os.system('tput clear')
 os.system(f'mode con: cols=120 lines={window_height}')
 os.system('color 3f')
-print(" __________________")
-print("/                  \ ")
+# Show the top of the bubble
+print(""" __________________
+/                  \ """)
+# Show the contents of the words text file
 print(clip_txt, end="")
 shark = open(target_dir + '/snarkshark_short.txt', 'r')
 shark_txt = shark.read()
@@ -47,3 +49,9 @@ os.system(f'swavplayer "{lucky_one}"')
 #os.system('printf \033[8\;30\;120t')
 #os.system('ttytle')
 #os.system('tput clear')
+
+# Keep track for statistics
+totalcount = len(all_filenames)
+with open('eightball.log', 'a') as f:
+    now = datetime.datetime.now().strftime('%m/%d/%Y,%H:%M:%S')
+    f.write(f'{now},{all_filenames.index(lucky_one)},{totalcount},{os.path.basename(lucky_one)}\n')
