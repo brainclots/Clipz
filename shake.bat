@@ -1,7 +1,7 @@
 @echo off & setLocal EnableDelayedExpansion
 
 :playit
-py "%GDRIVE%\Music\Soundz\Clipz\eightball.py"
+call "%GDRIVE%\Music\Soundz\Clipz\eightball.bat"
 title ~~~ Shaking the Eightball ~~~
 :: Set random wait time of 15 to 120 seconds
 set /a timeleft=(%random% %% 105) + 15
@@ -39,8 +39,11 @@ echo                    --=== PAUSED ===--
 echo.
 echo.
 pause
-set timeleft=1
+::set timeleft=1
 goto :playit
 
 :leaveloop
+cls
+color 07
+mode con: cols=120 lines=30
 title %comspec%
