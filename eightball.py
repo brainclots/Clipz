@@ -6,33 +6,17 @@ import datetime
 import time
 import sys
 
-da_ball = '''
-
-        _.a$$$$$a._
-      ,$$$$$$$$$$$$$.
-    ,$$$$$$$$$$$$$$$$$.
-   d$$$$$$$$$$$$$$$$$$$b
-  d$$$$$$$$~'"`~$$$$$$$$b
- ($$$$$$$p   _   q$$$$$$$)
- $$$$$$$$   (_)   $$$$$$$$
- $$$$$$$$   (_)   $$$$$$$$
- ($$$$$$$b       d$$$$$$$)
-  q$$$$$$$$a._.a$$$$$$$$p
-   q$$$$$$$$$$$$$$$$$$$p
-    `$$$$$$$$$$$$$$$$$'
-      `$$$$$$$$$$$$$'
-        `~$$$$$$$~'
-            '''
 
 
 def get_it():
+    global all_filenames
     google_drive = os.getenv('GDRIVE')
     google_drive = google_drive.replace('"', '')
     target_dir = os.path.normpath(google_drive + '/Music/Soundz/Clipz')
-    wav_filenames = glob.glob(target_dir + '/*.wav')
-    mp3_filenames = glob.glob(target_dir + '/*.mp3')
-
-    all_filenames = wav_filenames + mp3_filenames
+    if len(all_filenames) == 0:
+        wav_filenames = glob.glob(target_dir + '/*.wav')
+        mp3_filenames = glob.glob(target_dir + '/*.mp3')
+        all_filenames = wav_filenames + mp3_filenames
     random.shuffle(all_filenames)
     lucky_one = all_filenames.pop()
     word_file = lucky_one + ".txt"
@@ -64,6 +48,7 @@ def get_it():
     print(shark_txt, end=" ")
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
     print(f'{" ":75}{lucky_parens:^20}')
+    print(len(all_filenames))
 
     os.system(f'title Playing {os.path.basename(lucky_one)}')
     os.system(f'swavplayer "{lucky_one}"')
@@ -94,7 +79,7 @@ def rest_it(nap_length, now=datetime.datetime.now):
         os.system('color 20')
         os.system('mode con: cols=53 lines=22')
         timesthru = 0
-        num_indents = -1
+        num_indents = 0
         for remaining in range(nap_length, 0, -1):
             target += one_second_later
             os.system('cls')
@@ -127,6 +112,24 @@ def indent(a_string, num_indents=1):
 
 
 if __name__ == '__main__':
+    all_filenames = []
+    da_ball = '''
+
+        _.a$$$$$a._
+      ,$$$$$$$$$$$$$.
+    ,$$$$$$$$$$$$$$$$$.
+   d$$$$$$$$$$$$$$$$$$$b
+  d$$$$$$$$~'"`~$$$$$$$$b
+ ($$$$$$$p   _   q$$$$$$$)
+ $$$$$$$$   (_)   $$$$$$$$
+ $$$$$$$$   (_)   $$$$$$$$
+ ($$$$$$$b       d$$$$$$$)
+  q$$$$$$$$a._.a$$$$$$$$p
+   q$$$$$$$$$$$$$$$$$$$p
+    `$$$$$$$$$$$$$$$$$'
+      `$$$$$$$$$$$$$'
+        `~$$$$$$$~'
+            '''
     get_it()
     os.system('cls')
     os.system('color 07')
