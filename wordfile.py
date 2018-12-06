@@ -32,7 +32,7 @@ def main():
     edge = '|'
     linelen = 0
     linenum = 0
-    currentword=0
+    currentword = 0
     desiredwidth = 19
     pline = []          # Potential line list
     linedict = {}       # Line dictionary in {1: [first, line], 2: [second, line]} format.
