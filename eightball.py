@@ -56,7 +56,7 @@ def get_it():
     print(shark_txt, end=" ")
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
     print(f'{" ":75}{lucky_parens:^20}')
-    print(f'{"(Files left to play: ":^20}{len(all_filenames)}{")"}')
+    print(f'{"Unique files left to play: ":>97}{len(all_filenames)}')
 
     os.system(f'title Playing {os.path.basename(lucky_one)}')
     os.system(f'swavplayer "{lucky_one}"')
