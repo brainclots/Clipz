@@ -13,7 +13,7 @@ def get_it():
     google_drive = os.getenv('GDRIVE')
     google_drive = google_drive.replace('"', '')
     target_dir = os.path.normpath(google_drive + '/Music/Soundz/Clipz')
-    listofiles = Path("listofiles.txt")
+    listofiles = Path(target_dir + "/listofiles.txt")
     if listofiles.is_file():
         with open(listofiles) as f:
             all_filenames = f.read().splitlines()
@@ -22,13 +22,14 @@ def get_it():
         mp3_filenames = glob.glob(target_dir + '/*.mp3')
         all_filenames = wav_filenames + mp3_filenames
     random.shuffle(all_filenames)
-    lucky_one = all_filenames.pop()
-    word_file = lucky_one + ".txt"
+
     with open(listofiles, 'w') as f:
         for item in all_filenames:
             if item:
                 f.write(f'{item}\n')
 
+    lucky_one = all_filenames.pop()
+    word_file = lucky_one + ".txt"
     if os.path.isfile(word_file):
         clip_file = open(word_file, 'r')
     else:
@@ -56,7 +57,6 @@ def get_it():
     print(shark_txt, end=" ")
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
     print(f'{" ":75}{lucky_parens:^20}')
-    print(f'{"Unique files left to play: ":>97}{len(all_filenames)}')
 
     os.system(f'title Playing {os.path.basename(lucky_one)}')
     os.system(f'swavplayer "{lucky_one}"')
@@ -101,7 +101,8 @@ def rest_it(nap_length, now=datetime.datetime.now):
                 timesthru = 0
                 num_indents = 0
             print(indent(da_ball,num_indents))
-            print(f'{"Sleeping for ":>27}{str(remaining)}{" seconds..."}')
+            print(f'{"Sleeping for ":>25}{str(remaining)}{" seconds..."}')
+            print(f'\n{"          Unique files left to play: "}{len(all_filenames)}')
             time.sleep((target - now()).total_seconds())
         get_it()
     except KeyboardInterrupt:
