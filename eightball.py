@@ -22,14 +22,13 @@ def get_it():
         mp3_filenames = glob.glob(target_dir + '/*.mp3')
         all_filenames = wav_filenames + mp3_filenames
     random.shuffle(all_filenames)
-
+    lucky_one = all_filenames.pop()
+    word_file = Path(lucky_one.strip() + ".txt")
     with open(listofiles, 'w') as f:
         for item in all_filenames:
             if item:
                 f.write(f'{item}\n')
 
-    lucky_one = all_filenames.pop()
-    word_file = lucky_one + ".txt"
     if os.path.isfile(word_file):
         clip_file = open(word_file, 'r')
     else:
@@ -69,7 +68,6 @@ def get_it():
 
 def track_it(all_filenames, lucky_one):
     # Keep track for statistics
-    totalcount = len(all_filenames)
     with open('eightball.log', 'a') as f:
         now = datetime.datetime.now().strftime('%m/%d/%Y,%H:%M:%S')
         f.write(f'{now},{os.path.basename(lucky_one)}\n')
@@ -91,12 +89,15 @@ def rest_it(nap_length, now=datetime.datetime.now):
         for remaining in range(nap_length, 0, -1):
             target += one_second_later
             os.system('cls')
+            # Move the ball right 5 times
             if timesthru < 5:
                 timesthru += 1
                 num_indents += 1
+            # Move the ball left 5 times
             elif (timesthru >= 5) and (timesthru <= 8):
                 timesthru += 1
                 num_indents -= 1
+            # Start over
             else:
                 timesthru = 0
                 num_indents = 0
