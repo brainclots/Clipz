@@ -13,7 +13,7 @@ def get_it():
     google_drive = os.getenv('GDRIVE')
     google_drive = google_drive.replace('"', '')
     target_dir = os.path.normpath(google_drive + '/Music/Soundz/Clipz')
-    listofiles = Path(target_dir + "/listofiles.txt")
+    listofiles = Path(target_dir + "/listofiles.tmp")
     if listofiles.is_file():
         with open(listofiles) as f:
             all_filenames = f.read().splitlines()
@@ -22,8 +22,8 @@ def get_it():
         mp3_filenames = glob.glob(target_dir + '/*.mp3')
         all_filenames = wav_filenames + mp3_filenames
     random.shuffle(all_filenames)
-    lucky_one = all_filenames.pop()
-    word_file = Path(lucky_one.strip() + ".txt")
+    lucky_one = all_filenames.pop().strip()
+    word_file = Path(lucky_one + ".txt")
     with open(listofiles, 'w') as f:
         for item in all_filenames:
             if item:
@@ -104,7 +104,8 @@ def rest_it(nap_length, now=datetime.datetime.now):
             print(indent(da_ball,num_indents))
             print(f'{"Sleeping for ":>25}{str(remaining)}{" seconds..."}')
             print(f'\n{"          Unique files left to play: "}{len(all_filenames)}')
-            time.sleep((target - now()).total_seconds())
+            if (target - now()).total_seconds() >= 0:
+                time.sleep((target - now()).total_seconds())
         get_it()
     except KeyboardInterrupt:
         os.system('cls')

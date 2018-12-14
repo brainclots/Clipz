@@ -13,9 +13,9 @@ if not EXIST %FILE2ADD% (
   goto eof
 )
 
-echo %cd%\%FILE2ADD% >> listofiles.txt
+echo %cd%\%FILE2ADD%>> listofiles.tmp
 echo.
-echo Successfully added %cd%\%FILE2ADD% to listofiles.txt
+echo Successfully added %FILE2ADD% to listofiles.tmp
 echo.
 
 :eof
