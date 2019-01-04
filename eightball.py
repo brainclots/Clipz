@@ -97,10 +97,15 @@ def rest_it(nap_length, now=datetime.datetime.now):
     # 'try' block is to allow for a clean exit if pressing Ctrl+C (which runs
     # the 'except' block)
     try:
+        OS = platform.system()
+        if OS == 'Windows':
+            clearcommand = 'cls'
+        else:
+            clearcommand = 'clear'
         target = now()
         one_second_later = datetime.timedelta(seconds=1)
-        if platform.system() == 'Windows':
-            os.system('cls')
+        os.system(clearcommand)
+        if OS == 'Windows':
             os.system('title ~~~ Shaking the Eightball ~~~')
             os.system('color 20') # Set background color to green, foreground to black
             os.system('mode con: cols=53 lines=22') # Set window to smaller size
@@ -111,7 +116,7 @@ def rest_it(nap_length, now=datetime.datetime.now):
         num_indents = 0
         for remaining in range(nap_length, 0, -1): # Countdown from nap_length to zero
             target += one_second_later
-            os.system('cls')
+            os.system(clearcommand)
             if timesthru < 5:
                 # Move the ball right 5 times
                 timesthru += 1
