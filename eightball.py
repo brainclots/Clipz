@@ -6,10 +6,12 @@ import datetime
 import time
 import sys
 from pathlib import Path
-
+import platform
 
 def get_it():
     global all_filenames
+    # Determine OS we are running on
+    OS = platform.system()
     # Get the list of files
     google_drive = os.environ['GDRIVE']
     google_drive = Path(google_drive)
@@ -47,10 +49,12 @@ def get_it():
     # many lines were in the word_file
     window_height = 29 + num_lines
     # Set window size to the right height in lines and 120 characters wide
-    #os.system('printf \033[8\;%d\;120t' % window_height) # Mac/Linux
-    #os.system('tput clear') # Mac/Linux
-    os.system(f'mode con: cols=120 lines={window_height}') # Windows
-    os.system('color 3f') # Windows
+    if OS == 'Windows':
+        os.system(f'mode con: cols=120 lines={window_height}') # Windows
+        os.system('color 3f') # Windows
+    else:
+        os.system('printf \033[8\;%d\;120t' % window_height) # Mac/Linux
+        os.system('tput clear') # Mac/Linux
     # Show the top of the bubble
     print(" __________________  ")
     print("/                  \ ")
@@ -64,12 +68,14 @@ def get_it():
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
     print(f'{" ":75}{lucky_parens:^20}')
     # Set the title and play the sound
-    os.system(f'title Playing {os.path.basename(lucky_one)}') # Windows
-    os.system(f'swavplayer "{lucky_one}"') # Windows
-    #os.system(f'afplay -v .2 {lucky_one}) # Mac
-    #os.system('printf \033[8\;30\;120t')  # Mac/Linux
-    #os.system('ttytle')    # Mac/Linux
-    #os.system('tput clear')    #Mac/Linux
+    if OS == 'Windows':
+        os.system(f'title Playing {os.path.basename(lucky_one)}') # Windows
+        os.system(f'swavplayer "{lucky_one}"') # Windows
+    else: # Mac/Linux
+        os.system(f'afplay -v .2 {lucky_one}')
+        os.system('printf \033[8\;30\;120t')
+        os.system('ttytle')
+        os.system('tput clear')
     # Run the function to log what was played and when
     track_it(all_filenames, lucky_one)
 
@@ -93,10 +99,13 @@ def rest_it(nap_length, now=datetime.datetime.now):
     try:
         target = now()
         one_second_later = datetime.timedelta(seconds=1)
-        os.system('cls')
-        os.system('title ~~~ Shaking the Eightball ~~~')
-        os.system('color 20') # Set background color to green, foreground to black
-        os.system('mode con: cols=53 lines=22') # Set window to smaller size
+        if platform.system() == 'Windows':
+            os.system('cls')
+            os.system('title ~~~ Shaking the Eightball ~~~')
+            os.system('color 20') # Set background color to green, foreground to black
+            os.system('mode con: cols=53 lines=22') # Set window to smaller size
+        else:
+            pass # Need to write Linux version
         # Create loop to control the placement of the 'eightball'
         timesthru = 0
         num_indents = 0
@@ -120,7 +129,7 @@ def rest_it(nap_length, now=datetime.datetime.now):
             # Show how long til the next sound
             print(f'{"Sleeping for ":>25}{str(remaining)}{" seconds..."}')
             # Show how many unplayed files are left in the list
-            print(f'\n{"          Unique files left to play: "}{len(all_filenames)}')
+            print(f'\n{"Unique files left to play: ":>37}{len(all_filenames)}')
             # If there are still seconds left, sleep 1 second before restarting the loop
             if (target - now()).total_seconds() >= 0:
                 time.sleep((target - now()).total_seconds())
