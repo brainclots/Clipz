@@ -16,6 +16,7 @@ if not EXIST %FILE2ADD% (
 echo %cd%\%FILE2ADD%>> listofiles.tmp
 echo.
 echo Successfully added %FILE2ADD% to listofiles.tmp
+findstr /n "%FILE2ADD%" listofiles.tmp
 echo.
 
 :eof

@@ -18,32 +18,29 @@ def get_it():
     target_dir = google_drive / 'Music/Soundz/Clipz'
     listofiles = target_dir / 'listofiles.tmp'
     if listofiles.is_file():
-        with open(listofiles) as f:
-            all_filenames = f.read().splitlines()
+        all_filenames = listofiles.read_text().splitlines()
+        # with open(listofiles) as f:
+        #     all_filenames = f.read().splitlines()
     if len(all_filenames) == 0:
-        wav_filenames = glob.glob(target_dir + '/*.wav')
-        mp3_filenames = glob.glob(target_dir + '/*.mp3')
+        wav_filenames = list(target_dir.glob('*.wav'))
+        mp3_filenames = list(target_dir.glob('*.mp3'))
         all_filenames = wav_filenames + mp3_filenames
     # Shuffle the list and pick the 'lucky_one'
     random.shuffle(all_filenames)
-    lucky_one = all_filenames.pop().strip()
-    word_file = Path(lucky_one + ".txt")
+    lucky_one = all_filenames.pop()
+    word_file = Path(str(lucky_one) + ".txt")
     # Write newly shuffled list of files back to list (without the 'lucky_one')
     with open(listofiles, 'w') as f:
         for item in all_filenames:
             if item:
                 f.write(f'{item}\n')
-
     # Get the words from the word_file
-    if os.path.isfile(word_file):
-        clip_file = open(word_file, 'r')
+    if word_file.exists():
+        clip_txt = word_file.read_text()
     else:
-        clip_file_path = target_dir + '/snarky.txt'
-        clip_file = open(clip_file_path, 'r')
-
-    clip_txt = clip_file.read()
+        clip_file_path = target_dir / 'snarky.txt'
+        clip_txt = clip_file_path.read_text()
     num_lines = clip_txt.count('\n')
-    clip_file.close()
 
     # The height of the window should be 29 lines from the shark plus however
     # many lines were in the word_file
