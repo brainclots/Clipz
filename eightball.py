@@ -19,8 +19,6 @@ def get_it():
     listofiles = target_dir / 'listofiles.tmp'
     if listofiles.is_file():
         all_filenames = listofiles.read_text().splitlines()
-        # with open(listofiles) as f:
-        #     all_filenames = f.read().splitlines()
     if len(all_filenames) == 0:
         wav_filenames = list(target_dir.glob('*.wav'))
         mp3_filenames = list(target_dir.glob('*.mp3'))
@@ -57,9 +55,9 @@ def get_it():
     print("/                  \ ")
     # Show the contents of the words text file
     print(clip_txt, end="")
-    shark = open(target_dir / 'snarkshark_short.txt', 'r')
-    shark_txt = shark.read()
-    shark.close()
+    #Show the rest of the shark
+    shark = target_dir / 'snarkshark_short.txt'
+    shark_txt = shark.read_text()
     print(shark_txt, end=" ")
     # Show the name of the file being played
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'

@@ -18,7 +18,7 @@ for /f "tokens=*" %%f in ('dir /b *.wav *.mp3') DO (
 		for /f %%i in (no_words.txt) DO (
 			if %%f EQU %%i set excused="yes"
 		)
-	if !excused! EQU "no" echo %%f does not have a wordfile
+	if !excused! EQU "no" echo. & echo %%f does not have a wordfile
 	)
 )
 echo.
