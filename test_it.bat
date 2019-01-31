@@ -25,7 +25,7 @@ echo.
 echo  __________________
 echo /                  \
 type %wordfile%
-type "%CLIPZ%\snarkshark_short.txt"
+type "%CLIPZ%\snarkshark_short_img.txt"
 
 :showname
 echo                                                                               ( %filename% )

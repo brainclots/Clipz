@@ -40,28 +40,37 @@ def get_it():
         clip_txt = clip_file_path.read_text()
     num_lines = clip_txt.count('\n')
 
-    # The height of the window should be 29 lines from the shark plus however
-    # many lines were in the word_file
-    window_height = 29 + num_lines
+    # The height of the window should be the number of lines from the image
+    # (img_lines) plus however many lines were in the word_file (num_lines)
+    images = list(target_dir.glob('*_img.txt'))
+    img = target_dir / random.choice(images)
+    img_txt = img.read_text()
+    img_lines = img_txt.count('\n')
+    # Determine max width of the image
+    width = 0
+    for line in img_txt.splitlines():
+        i = len(line)
+        if i > width:
+            width = i
+    window_height = 5 + img_lines + num_lines
     # Set window size to the right height in lines and 120 characters wide
     if OS == 'Windows':
-        os.system(f'mode con: cols=120 lines={window_height}') # Windows
-        os.system('color 3f') # Windows
+        os.system(f'mode con: cols={width + 5} lines={window_height}') # Windows
+        os.system('color F0') # Windows
     else:
-        os.system('printf \033[8\;%d\;120t' % window_height) # Mac/Linux
+        os.system(f'printf \033[8\;{window_height}\;{width}t') # Mac/Linux
         os.system('tput clear') # Mac/Linux
-    # Show the top of the bubble
+    # Show the top of the speech bubble
     print(" __________________  ")
     print("/                  \ ")
     # Show the contents of the words text file
     print(clip_txt, end="")
-    #Show the rest of the shark
-    shark = target_dir / 'snarkshark_short.txt'
-    shark_txt = shark.read_text()
-    print(shark_txt, end=" ")
+    #Show the rest of the image
+    #img = target_dir / random.choice(images)
+    print(img_txt, end=" ")
     # Show the name of the file being played
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
-    print(f'{" ":75}{lucky_parens:^20}')
+    print(f'\n{lucky_parens:^{width}}')
     # Set the title and play the sound
     if OS == 'Windows':
         os.system(f'title Playing {os.path.basename(lucky_one)}') # Windows
@@ -72,16 +81,16 @@ def get_it():
         os.system('ttytle')
         os.system('tput clear')
     # Run the function to log what was played and when
-    track_it(all_filenames, lucky_one)
+    track_it(all_filenames, lucky_one, img)
 
 
-def track_it(all_filenames, lucky_one):
+def track_it(all_filenames, lucky_one, img):
     # Keep track for statistics
     with open('eightball.log', 'a') as f:
         # Get the date and time in proper format
         now = datetime.datetime.now().strftime('%m/%d/%Y,%H:%M:%S')
         # Add the line to the log
-        f.write(f'{now},{os.path.basename(lucky_one)}\n')
+        f.write(f'{now},{os.path.basename(lucky_one)},{img.name}\n')
     # If running in a loop, pick a number between 15 and 120 seconds to wait
     if len(sys.argv) > 1:
         nap_length = random.randrange(15, 120)
