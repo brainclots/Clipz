@@ -13,8 +13,7 @@ def get_it():
     # Determine OS we are running on
     OS = platform.system()
     # Get the list of files
-    google_drive = os.environ['GDRIVE']
-    google_drive = Path(google_drive)
+    google_drive = Path(os.environ['GDRIVE'])
     target_dir = google_drive / 'Music/Soundz/Clipz'
     listofiles = target_dir / 'listofiles.tmp'
     if listofiles.is_file():
@@ -66,7 +65,6 @@ def get_it():
     # Show the contents of the words text file
     print(clip_txt, end="")
     #Show the rest of the image
-    #img = target_dir / random.choice(images)
     print(img_txt, end=" ")
     # Show the name of the file being played
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
@@ -112,7 +110,7 @@ def rest_it(nap_length, now=datetime.datetime.now):
         if OS == 'Windows':
             os.system('title ~~~ Shaking the Eightball ~~~')
             os.system('color 20') # Set background color to green, foreground to black
-            os.system('mode con: cols=53 lines=22') # Set window to smaller size
+            os.system('mode con: cols=52 lines=22') # Set window to smaller size
         else:
             pass # Need to write Linux version
         # Create loop to control the placement of the 'eightball'
@@ -136,7 +134,7 @@ def rest_it(nap_length, now=datetime.datetime.now):
             # Show 'da_ball', indented 'num_indents' times
             print(indent(da_ball,num_indents))
             # Show how long til the next sound
-            print(f'{"Sleeping for ":>25}{str(remaining)}{" seconds..."}')
+            print(f'{"Sleeping for ":>26}{str(remaining)}{" seconds..."}')
             # Show how many unplayed files are left in the list
             print(f'\n{"Unique files left to play: ":>37}{len(all_filenames)}')
             # If there are still seconds left, sleep 1 second before restarting the loop
