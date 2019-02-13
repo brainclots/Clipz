@@ -22,9 +22,9 @@ def get_it():
         wav_filenames = list(target_dir.glob('*.wav'))
         mp3_filenames = list(target_dir.glob('*.mp3'))
         all_filenames = wav_filenames + mp3_filenames
-    # Shuffle the list and pick the 'lucky_one'
-    random.shuffle(all_filenames)
+    # Pick the 'lucky_one' and shuffle the list
     lucky_one = all_filenames.pop()
+    random.shuffle(all_filenames)
     word_file = Path(str(lucky_one) + ".txt")
     # Write newly shuffled list of files back to list (without the 'lucky_one')
     with open(listofiles, 'w') as f:
@@ -99,7 +99,6 @@ def rest_it(nap_length, now=datetime.datetime.now):
     # 'try' block is to allow for a clean exit if pressing Ctrl+C (which runs
     # the 'except' block)
     try:
-        OS = platform.system()
         if OS == 'Windows':
             clearcommand = 'cls'
         else:
@@ -144,9 +143,10 @@ def rest_it(nap_length, now=datetime.datetime.now):
         get_it()
 
     except KeyboardInterrupt: # KeyboardInterrupt = Ctrl+C
-        os.system('cls')
-        os.system('color 07')
-        os.system('mode con: cols=120 lines=30')
+        if OS == 'Windows':
+            os.system('cls')
+            os.system('color 07')
+            os.system('mode con: cols=120 lines=30')
         exit()
 
 
@@ -178,7 +178,9 @@ if __name__ == '__main__':
       `$$$$$$$$$$$$$'
         `~$$$$$$$~'
             ''' """
+    OS = platform.system()
     get_it()
-    os.system('cls')
-    os.system('color 07')
-    os.system('mode con: cols=120 lines=30')
+    if OS == 'Windows':
+        os.system('cls')
+        os.system('color 07')
+        os.system('mode con: cols=120 lines=30')
