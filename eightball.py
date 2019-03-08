@@ -52,7 +52,7 @@ def get_it():
         if i > width:
             width = i
     window_height = 5 + img_lines + num_lines
-    # Set window size to the right height in lines and 120 characters wide
+    # Set window size to the right height and width
     if OS == 'Windows':
         os.system(f'mode con: cols={width + 5} lines={window_height}') # Windows
         os.system('color F0') # Windows
@@ -69,15 +69,19 @@ def get_it():
     # Show the name of the file being played
     lucky_parens = '( ' + os.path.basename(lucky_one) + ' )'
     print(f'\n{lucky_parens:^{width}}')
-    # Set the title and play the sound
-    if OS == 'Windows':
-        os.system(f'title Playing {os.path.basename(lucky_one)}') # Windows
-        os.system(f'swavplayer "{lucky_one}"') # Windows
-    else: # Mac/Linux
-        os.system(f'afplay -v .2 {lucky_one}')
-        os.system('printf \033[8\;30\;120t')
-        os.system('ttytle')
-        os.system('tput clear')
+    if os.path.exists(lucky_one):
+        # Set the title and play the sound
+        if OS == 'Windows':
+            os.system(f'title Playing {os.path.basename(lucky_one)}') # Windows
+            os.system(f'swavplayer "{lucky_one}"') # Windows
+        else: # Mac/Linux
+            os.system(f'afplay -v .2 {lucky_one}')
+            os.system('printf \033[8\;30\;120t')
+            os.system('ttytle')
+            os.system('tput clear')
+    else:
+        print(f'Unable to locate {lucky_one}!')
+        exit()
     # Run the function to log what was played and when
     track_it(all_filenames, lucky_one, img)
 
