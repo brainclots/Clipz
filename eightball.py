@@ -23,14 +23,11 @@ def get_it():
         mp3_filenames = list(target_dir.glob('*.mp3'))
         all_filenames = wav_filenames + mp3_filenames
     # Pick the 'lucky_one' and shuffle the list
-    lucky_one = all_filenames.pop()
     random.shuffle(all_filenames)
+    lucky_one = all_filenames.pop()
+    if str(lucky_one).startswith('%GDRIVE%'):
+        lucky_one = lucky_one.replace('%GDRIVE%', str(google_drive))
     word_file = Path(str(lucky_one) + ".txt")
-    # Write newly shuffled list of files back to list (without the 'lucky_one')
-    with open(listofiles, 'w') as f:
-        for item in all_filenames:
-            if item:
-                f.write(f'{item}\n')
     # Get the words from the word_file
     if word_file.exists():
         clip_txt = word_file.read_text()
@@ -38,6 +35,12 @@ def get_it():
         clip_file_path = target_dir / 'snarky.txt'
         clip_txt = clip_file_path.read_text()
     num_lines = clip_txt.count('\n')
+    # Write newly shuffled list of files back to list (without the 'lucky_one')
+    with open(listofiles, 'w') as f:
+        for item in all_filenames:
+            if item:
+                variabled_item = str(item).replace(r'C:\Users\bklotz\Google Drive','%GDRIVE%')
+                f.write(f'{variabled_item}\n')
 
     # The height of the window should be the number of lines from the image
     # (img_lines) plus however many lines were in the word_file (num_lines)
