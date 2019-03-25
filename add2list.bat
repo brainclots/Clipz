@@ -13,7 +13,8 @@ if not EXIST %FILE2ADD% (
   goto eof
 )
 
-echo %cd%\%FILE2ADD%>> listofiles.tmp
+
+echo %%GDRIVE%%\Music\Soundz\Clipz\%FILE2ADD%>> listofiles.tmp
 echo.
 echo Successfully added %FILE2ADD% to listofiles.tmp
 findstr /n "%FILE2ADD%" listofiles.tmp

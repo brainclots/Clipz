@@ -5,15 +5,15 @@ pushd %GDRIVE%\Music\Soundz
 set /p LOGON=<logon.txt
 set /p LOGOFF=<logoff.txt
 echo.
-set message=Press [N] to play the logon sound: !LOGON!^
+set message=Press [1] to play the logon sound: !LOGON!^
 
-Press [F] to play the logoff sound: !LOGOFF!^
+Press [2] to play the logoff sound: !LOGOFF!^
 
 Press [R] to pick new sounds^
 
 Press [Q] to quit.
 echo !message!
-choice /c nfrq
+choice /c 12rq
 set SELECTION=%ERRORLEVEL%
 
 if %SELECTION% EQU 1 echo | set /p="The logon sound is set to !LOGON!"  & swavplayer "%GDRIVE%\Music\Soundz\currentlogon.wav"
