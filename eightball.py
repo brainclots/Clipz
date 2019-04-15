@@ -24,11 +24,11 @@ def get_it():
         mp3_filenames = list(target_dir.glob('*.mp3'))
         all_filenames = wav_filenames + mp3_filenames
 
-    # Pick the 'lucky_one' and shuffle the list
+    #  Shuffle the list and pick the 'lucky_one'
     random.shuffle(all_filenames)
     lucky_one = all_filenames.pop()
     if str(lucky_one).startswith('%GDRIVE%'):
-        lucky_one = lucky_one.replace('%GDRIVE%', str(google_drive))
+        lucky_one = lucky_one.replace('%GDRIVE%',str(google_drive))
     word_file = Path(str(lucky_one) + ".txt")
 
     # Get the words from the word_file
