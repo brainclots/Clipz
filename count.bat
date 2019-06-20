@@ -49,12 +49,14 @@ exit /b
 
 :end
 :: Get & display totalcount
-set /a totalcount=%wavcount% + %mp3count%
-echo -----------------=== Totals ===---------------------
-echo                  WAV files: %wavcount%
-echo                  MP3 files: %mp3count%
-echo                Total clips: %totalcount%
-echo ----------------------------------------------------
-start /b sounder /stop
+start /b sounder /stop && del stopfile
+::echo.                (Wait for it...)
+::timeout /T 1 /NOBREAK > NUL
 start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\coh_level_up.mp3"
 ::start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\fireworks.mp3"
+set /a totalcount=%wavcount% + %mp3count%
+echo -----------------=== Totals ===---------------------
+echo                   WAV files: %wavcount%
+echo                   MP3 files: %mp3count%
+echo                 Total clips: %totalcount%
+echo ----------------------------------------------------
