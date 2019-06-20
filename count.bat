@@ -49,7 +49,8 @@ exit /b
 
 :end
 :: Get & display totalcount
-start /b sounder /stop && del stopfile
+start /b sounder /stop
+if EXIST stopfile del /q stopfile
 ::echo.                (Wait for it...)
 ::timeout /T 1 /NOBREAK > NUL
 start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\coh_level_up.mp3"
