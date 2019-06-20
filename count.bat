@@ -2,6 +2,8 @@
 
 :: Go to the Clipz directory
 pushd "%CLIPZ%"
+start /b sounder.exe /loop "%GDRIVE%\Music\Soundz\Effects\yaheyahe-long.wav"
+::start /b swavplayer.exe "%GDRIVE%\Music\Soundz\Effects\yaheyahe2.wav"
 
 :: Initialize counters
 set mp3count=0
@@ -11,14 +13,13 @@ set wavcount=0
 for /F %%a in ('copy /Z "%~F0" NUL') do set "CR=%%a"
 
 :: Count files
-start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\yaheyahe2.wav"
-
 for /f "tokens=*" %%f in ('dir /b *.wav *.mp3 ^| sort') DO (
 	if "%%~xf"==".wav" (set /a wavcount+=1)
 	if "%%~xf"==".mp3" (set /a mp3count+=1)
 	< NUL set /p "=Counting !wavcount! wav files and !mp3count! mp3 files. !CR!"
-	set excused="no"
+
 	:: See if the file is in the list of excused files
+	set excused="no"
 	if NOT EXIST %%f.txt (
 		for /f %%i in (no_words.txt) DO (
 			if %%f EQU %%i set excused="yes"
@@ -49,8 +50,11 @@ exit /b
 :end
 :: Get & display totalcount
 set /a totalcount=%wavcount% + %mp3count%
-echo.
-echo.  WAV files: %wavcount%
-echo.  MP3 files: %mp3count%
-echo Total clips: %totalcount%
-start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\fanfare1.mp3"
+echo -----------------=== Totals ===---------------------
+echo                  WAV files: %wavcount%
+echo                  MP3 files: %mp3count%
+echo                Total clips: %totalcount%
+echo ----------------------------------------------------
+start /b sounder /stop
+start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\coh_level_up.mp3"
+::start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\fireworks.mp3"

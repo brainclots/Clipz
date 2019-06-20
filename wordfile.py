@@ -9,7 +9,7 @@ import os.path
 
 parser = argparse.ArgumentParser()
 parser.add_argument('soundfile', nargs=1)
-parser.add_argument('-w', nargs='*', dest='words')
+parser.add_argument('words', nargs='*')
 args = parser.parse_args()
 
 
@@ -27,7 +27,7 @@ def main():
     words = args.words
 
     if not os.path.isfile(soundfile):
-        print(f'{soundfile} does not exist!')
+        print(f'The first argument must be the name of the sound file, and \"{soundfile}\" does not exist!')
         return
     edge = '|'
     linelen = 0
