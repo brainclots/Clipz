@@ -18,8 +18,24 @@ set SELECTION=%ERRORLEVEL%
 
 if %SELECTION% EQU 1 echo | set /p="The logon sound is set to !LOGON!"  & swavplayer "%GDRIVE%\Music\Soundz\currentlogon.wav"
 if %SELECTION% EQU 2 echo | set /p="The logoff sound is set to !LOGOFF!" & swavplayer "%GDRIVE%\Music\Soundz\currentlogoff.wav"
-if %SELECTION% EQU 3 call .\LogOff\SetNextLogonLogoffSound.bat
+if %SELECTION% EQU 3 goto :RESET
 if %SELECTION% EQU 4 goto :audi9000
+goto :opt
+
+:RESET
+set oncount=0
+set offcount=0
+
+for /f "tokens=*" %%i in ('dir /b "%GDRIVE%\Music\Soundz\Logon\*.wav"') DO (
+  set /a oncount+=1
+)
+for /f "tokens=*" %%j in ('dir /b "%GDRIVE%\Music\Soundz\Logoff\*.wav"') DO (
+  set /a offcount+=1
+)
+
+echo.
+echo There are !oncount! logon sound files available, and !offcount! logoff sounds available. The lucky ones are:
+call .\LogOff\SetNextLogonLogoffSound.bat
 goto :opt
 
 :audi9000
