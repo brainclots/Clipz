@@ -58,5 +58,4 @@ echo                 Total clips: %totalcount%
 echo ----------------------------------------------------
 start /b /wait swavplayer "%GDRIVE%\Music\Soundz\Effects\coh_level_up.mp3"
 ::start /b swavplayer "%GDRIVE%\Music\Soundz\Effects\fireworks.mp3"
-::timeout /t 2 /nobreak > NUL
 if EXIST stopfile del /q stopfile
