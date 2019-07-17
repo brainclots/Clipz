@@ -27,4 +27,4 @@ swavplayer "%GDRIVE%\Music\Soundz\currentlogoff.wav"
 choice /m "Pick new sounds?"
 set SELECTION=%ERRORLEVEL%
 
-IF %SELECTION% EQU 1 call .\LogOff\SetNextLogonLogoffSound.bat
+IF %SELECTION% EQU 1 call .\LogOff\SetNextLogonLogoffSound.bat -v
